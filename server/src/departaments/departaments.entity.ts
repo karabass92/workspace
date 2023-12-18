@@ -1,5 +1,15 @@
-import { PrimaryGeneratedColumn, Entity, CreateDateColumn, UpdateDateColumn, Column } from 'typeorm'
-import { ObjectType, Field, ID } from '@nestjs/graphql'
+import {
+    PrimaryGeneratedColumn,
+    Entity,
+    Column,
+    OneToMany
+} from 'typeorm'
+import {
+    ObjectType,
+    Field,
+    ID
+} from '@nestjs/graphql'
+import { User } from 'src/users/users.entity'
 
 
 @ObjectType()
@@ -13,11 +23,6 @@ export class Departament {
     @Column({ unique: true })
     name: string
 
-    @Field()
-    @CreateDateColumn()
-    createdAt: Date
-
-    @Field()
-    @UpdateDateColumn()
-    updatedAt: Date
+    @OneToMany(() => User, (user) => user.departament, { cascade: true })
+    users: User[]
 }

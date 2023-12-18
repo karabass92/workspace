@@ -9,34 +9,53 @@ import { UpdateDepartamentInput } from './inputs/update-departament.input'
 @Injectable()
 export class DepartamentService {
     constructor(
-        @InjectRepository(Departament)
-        private readonly departamentRepository: Repository<Departament>
+        @InjectRepository(Departament) private readonly departamentRepository: Repository<Departament>
     ) { }
 
     async create(createDepartamentInput: CreateDepartamentInput): Promise<Departament> {
-        return await this.departamentRepository.save(createDepartamentInput)
+        try {
+            return await this.departamentRepository.save(createDepartamentInput)
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async update(updateDepartamentInput: UpdateDepartamentInput): Promise<Departament> {
+        try {
+            return await this.getOne(updateDepartamentInput.id)
+        } catch (error) {
+            console.log(error)
+        }
         await this.departamentRepository.update(
             { id: updateDepartamentInput.id },
             {
                 name: updateDepartamentInput.name
             }
         )
-        return await this.getOne(updateDepartamentInput.id)
     }
 
     async remove(id: number): Promise<number> {
-        await this.departamentRepository.delete({ id })
-        return id
+        try {
+            await this.departamentRepository.delete({ id })
+            return id
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async getOne(id: number): Promise<Departament> {
-        return await this.departamentRepository.findOne({ where: { id } })
+        try {
+            return await this.departamentRepository.findOne({ where: { id } })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     async getAll(): Promise<Departament[]> {
-        return await this.departamentRepository.find()
+        try {
+            return await this.departamentRepository.find()
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
