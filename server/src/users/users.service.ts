@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { Injectable, BadRequestException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { User } from './users.entity'
@@ -15,9 +15,25 @@ export class UserService {
         @InjectRepository(User) private readonly userRepository: Repository<User>,
     ) { }
 
+    private async validateUser(login?: string, id?: number): Promise<void> {
+        try {
+            if (login) {
+                const userLogin = await this.userRepository.findOneBy({ login: login.trim() })
+                if(userLogin) throw new BadRequestException('Пользователь с таким логином уже заведен!')
+            }
+            if (id) {
+                const userId = await this.userRepository.findOneBy({ id: id })
+                if(!userId) throw new BadRequestException('Пользователь с таким id номером не найден!')
+            }
+        } catch (error) {
+            console.log(error)
+        }
+        
+    } 
+
     async create(createUserInput: CreateUserInput): Promise<User> {
         try {
-
+            await this.validateUser(createUserInput.login)
             return await this.userRepository.save({
                 ...createUserInput,
                 login: createUserInput.login.trim(),
@@ -30,6 +46,7 @@ export class UserService {
 
     async update(updateUserInput: UpdateUserInput): Promise<User> {
         try {
+            await this.validateUser(updateUserInput.login, updateUserInput.id)
             await this.userRepository.update(
                 { id: updateUserInput.id },
                 {
@@ -46,6 +63,7 @@ export class UserService {
 
     async remove(id: number): Promise<number> {
         try {
+            await this.validateUser('', id)
             await this.userRepository.delete({ id })
             return id
         } catch (error) {
@@ -55,6 +73,7 @@ export class UserService {
 
     async getOne(id: number): Promise<User> {
         try {
+            await this.validateUser('', id)
             return await this.userRepository.findOne({ where: { id } })
         } catch (error) {
             console.log(error)

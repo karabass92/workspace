@@ -59,7 +59,6 @@ export class PositionService {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     async remove(id: number): Promise<number> {
