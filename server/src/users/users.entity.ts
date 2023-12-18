@@ -4,7 +4,6 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
     Column,
-    JoinColumn,
     BeforeUpdate,
     ManyToOne
 } from 'typeorm'
@@ -14,7 +13,7 @@ import {
     ID
 } from '@nestjs/graphql'
 import { Departament } from 'src/departaments/departaments.entity'
-
+import { Position } from 'src/positions/positions.entity'
 
 
 @ObjectType()
@@ -46,4 +45,8 @@ export class User {
     @Field((type) => Departament)
     @ManyToOne((type) => Departament, (departament) => departament.users, { onDelete: 'SET NULL' })
     departament: Departament
+
+    @Field((type) => Position)
+    @ManyToOne((type) => Position, (position) => position.users, { onDelete: 'SET NULL' })
+    position: Position
 }

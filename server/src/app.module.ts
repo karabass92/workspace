@@ -6,6 +6,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { DatabaseModule } from './database/database.module'
 import { UsersModule } from './users/users.module';
 import { DepartamentsModule } from './departaments/departaments.module';
+import { PositionsModule } from './positions/positions.module';
 
 
 @Module({
@@ -23,7 +24,7 @@ import { DepartamentsModule } from './departaments/departaments.module';
             playground: true
         }),
         
-        DatabaseModule, UsersModule, DepartamentsModule
+        DatabaseModule, UsersModule, DepartamentsModule, PositionsModule
     ],
 
     providers: [],

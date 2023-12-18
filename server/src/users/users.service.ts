@@ -6,7 +6,7 @@ import { CreateUserInput } from './inputs/create-user.input'
 import { UpdateUserInput } from './inputs/update-user.input'
 import * as bcrypt from 'bcryptjs'
 import { SALT } from 'src/constants'
-import { DepartamentService } from 'src/departaments/departaments.service'
+import { GetAllUsersInput } from './inputs/get-all-users.input'
 
 
 @Injectable()
@@ -61,9 +61,18 @@ export class UserService {
         }
     }
 
-    async getAll(): Promise<User[]> {
+    async getAll(getAllUsersInput?: GetAllUsersInput): Promise<User[]> {
         try {
-            return await this.userRepository.find()
+            return await this.userRepository.find({
+                relations: {
+                    departament: true,
+                    position: true
+                },
+                where: {
+                    position: {id: getAllUsersInput.positionId},
+                    departament: {id: getAllUsersInput.departamentId}
+                }
+            })
         } catch (error) {
             console.log(error)
         }

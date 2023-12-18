@@ -3,6 +3,7 @@ import { UserService } from './users.service'
 import { User } from './users.entity'
 import { CreateUserInput } from './inputs/create-user.input'
 import { UpdateUserInput } from './inputs/update-user.input'
+import { GetAllUsersInput } from './inputs/get-all-users.input'
 
 
 @Resolver('User')
@@ -49,9 +50,9 @@ export class UsersResolver {
     }
 
     @Query(() => [User])
-    async getAllUsers(): Promise<User[]> {
+    async getAllUsers(@Args() getAllUsersInput: GetAllUsersInput): Promise<User[]> {
         try {
-            return await this.userService.getAll()
+            return await this.userService.getAll(getAllUsersInput)
         } catch (error) {
             console.log(error)
         }
