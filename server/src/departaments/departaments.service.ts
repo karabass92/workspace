@@ -13,18 +13,14 @@ export class DepartamentService {
     ) { }
 
     private async validateDepartament(name?: string, id?: number): Promise<void> {
-        try {
-            if (name) {
-                const modifiedName = this.modifyName(name)
-                const departamentName = await this.departamentRepository.findOneBy({ name: modifiedName })
-                if (departamentName) throw new BadRequestException('Подразделение с таким наименованием уже заведено!')
-            }
-            if (id) {
-                const departamentId = this.departamentRepository.findOneBy({ id: id })
-                if (!departamentId) throw new BadRequestException('Подразделение с таким id номером не найдено!')
-            }
-        } catch (error) {
-            console.log(error)
+        if (name) {
+            const modifiedName = this.modifyName(name)
+            const departamentName = await this.departamentRepository.findOneBy({ name: modifiedName })
+            if (departamentName) throw new BadRequestException('Подразделение с таким наименованием уже заведено!')
+        }
+        if (id) {
+            const departamentId = await this.departamentRepository.findOneBy({ id: id })
+            if (!departamentId) throw new BadRequestException('Подразделение с таким id номером не найдено!')
         }
     }
 
@@ -33,7 +29,7 @@ export class DepartamentService {
             const modifiedName = name.trim().toLowerCase()
             return modifiedName.charAt(0).toUpperCase() + modifiedName.slice(1)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -43,7 +39,7 @@ export class DepartamentService {
             await this.validateDepartament(name)
             return await this.departamentRepository.save({ name })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -57,7 +53,7 @@ export class DepartamentService {
             )
             return await this.getOne(updateDepartamentInput.id)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -82,7 +78,7 @@ export class DepartamentService {
 
     async getAll(): Promise<Departament[]> {
         try {
-            return await this.departamentRepository.find()
+            return await this.departamentRepository.find({ order: { id: 'ASC' } })
         } catch (error) {
             console.log(error)
         }

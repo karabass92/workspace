@@ -4,9 +4,9 @@ import { GraphQLModule } from '@nestjs/graphql'
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 
 import { DatabaseModule } from './database/database.module'
-import { UsersModule } from './users/users.module';
-import { DepartamentsModule } from './departaments/departaments.module';
-import { PositionsModule } from './positions/positions.module';
+import { UsersModule } from './users/users.module'
+import { DepartamentsModule } from './departaments/departaments.module'
+import { PositionsModule } from './positions/positions.module'
 
 
 @Module({

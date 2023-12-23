@@ -29,13 +29,13 @@ type Departament {
 
 type Mutation {
   createDepartament(createDepartament: CreateDepartamentInput!): Departament!
-  createPosition(createDepartament: CreatePositionInput!): Position!
+  createPosition(createPosition: CreatePositionInput!): Position!
   createUser(createUser: CreateUserInput!): User!
   removeDepartament(id: Float!): Float!
   removePosition(id: Float!): Float!
   removeUser(id: Float!): Float!
-  updateDepartament(updateUser: UpdateDepartamentInput!): Departament!
-  updatePosition(updateUser: UpdatePositionInput!): Position!
+  updateDepartament(updateDepartament: UpdateDepartamentInput!): Departament!
+  updatePosition(updatePosition: UpdatePositionInput!): Position!
   updateUser(updateUser: UpdateUserInput!): User!
 }
 

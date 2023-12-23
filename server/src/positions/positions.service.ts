@@ -13,18 +13,14 @@ export class PositionService {
     ) { }
 
     private async validatePosition(name?: string, id?: number): Promise<void> {
-        try {
-            if (name) {
-                const modifiedName = this.modifyName(name)
-                const positionName = await this.positionRepository.findOneBy({ name: modifiedName })
-                if (positionName) throw new BadRequestException('Должность с таким наименованием уже заведена!')
-            }
-            if (id) {
-                const positionId = this.positionRepository.findOneBy({ id: id })
-                if (!positionId) throw new BadRequestException('Должность с таким id номером не найдена!')
-            }
-        } catch (error) {
-            console.log(error)
+        if (name) {
+            const modifiedName = this.modifyName(name)
+            const positionName = await this.positionRepository.findOneBy({ name: modifiedName })
+            if (positionName) throw new BadRequestException('Должность с таким наименованием уже заведена!')
+        }
+        if (id) {
+            const positionId = await this.positionRepository.findOneBy({ id: id })
+            if (!positionId) throw new BadRequestException('Должность с таким id номером не найдена!')
         }
     }
 
@@ -33,7 +29,7 @@ export class PositionService {
             const modifiedName = name.trim().toLowerCase()
             return modifiedName.charAt(0).toUpperCase() + modifiedName.slice(1)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -41,9 +37,9 @@ export class PositionService {
         try {
             const name = this.modifyName(createPositionInput.name)
             await this.validatePosition(name)
-            return await this.positionRepository.save(createPositionInput)
+            return await this.positionRepository.save({ name })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -57,7 +53,7 @@ export class PositionService {
             )
             return await this.getOne(updatePositionInput.id)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -67,7 +63,7 @@ export class PositionService {
             await this.positionRepository.delete({ id })
             return id
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -76,15 +72,15 @@ export class PositionService {
             await this.validatePosition('', id)
             return await this.positionRepository.findOne({ where: { id } })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
     async getAll(): Promise<Position[]> {
         try {
-            return await this.positionRepository.find()
+            return await this.positionRepository.find({ order: { id: 'ASC' } })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 }

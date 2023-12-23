@@ -21,7 +21,7 @@ export class DepartamentResolver {
     }
 
     @Mutation(() => Departament)
-    async updateDepartament(@Args('updateUser') updateDepartamentInput: UpdateDepartamentInput): Promise<Departament> {
+    async updateDepartament(@Args('updateDepartament') updateDepartamentInput: UpdateDepartamentInput): Promise<Departament> {
         try {
             return await this.departamentService.update(updateDepartamentInput)
         } catch (error) {

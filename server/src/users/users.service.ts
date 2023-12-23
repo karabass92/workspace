@@ -4,9 +4,9 @@ import { Repository } from 'typeorm'
 import { User } from './users.entity'
 import { CreateUserInput } from './inputs/create-user.input'
 import { UpdateUserInput } from './inputs/update-user.input'
+import { GetAllUsersInput } from './inputs/get-all-users.input'
 import * as bcrypt from 'bcryptjs'
 import { SALT } from 'src/constants'
-import { GetAllUsersInput } from './inputs/get-all-users.input'
 
 
 @Injectable()

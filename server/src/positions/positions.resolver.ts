@@ -12,7 +12,7 @@ export class PositionResolver {
     ) { }
 
     @Mutation(() => Position)
-    async createPosition(@Args('createDepartament') createPositionInput: CreatePositionInput): Promise<Position> {
+    async createPosition(@Args('createPosition') createPositionInput: CreatePositionInput): Promise<Position> {
         try {
             return await this.positionService.create(createPositionInput)
         } catch (error) {
@@ -21,7 +21,7 @@ export class PositionResolver {
     }
 
     @Mutation(() => Position)
-    async updatePosition(@Args('updateUser') updatePositionInput: UpdatePositionInput): Promise<Position> {
+    async updatePosition(@Args('updatePosition') updatePositionInput: UpdatePositionInput): Promise<Position> {
         try {
             return await this.positionService.update(updatePositionInput)
         } catch (error) {
