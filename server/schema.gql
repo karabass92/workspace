@@ -10,6 +10,10 @@ input CreatePositionInput {
   name: String!
 }
 
+input CreateRightInput {
+  name: String!
+}
+
 input CreateUserInput {
   departament: UserDepartamentInput
   login: String!
@@ -30,12 +34,15 @@ type Departament {
 type Mutation {
   createDepartament(createDepartament: CreateDepartamentInput!): Departament!
   createPosition(createPosition: CreatePositionInput!): Position!
+  createRight(createRight: CreateRightInput!): Right!
   createUser(createUser: CreateUserInput!): User!
   removeDepartament(id: Float!): Float!
   removePosition(id: Float!): Float!
+  removeRight(id: Float!): Float!
   removeUser(id: Float!): Float!
   updateDepartament(updateDepartament: UpdateDepartamentInput!): Departament!
   updatePosition(updatePosition: UpdatePositionInput!): Position!
+  updateRight(updateRight: UpdateRightInput!): Right!
   updateUser(updateUser: UpdateUserInput!): User!
 }
 
@@ -47,10 +54,17 @@ type Position {
 type Query {
   getAllDepartaments: [Departament!]!
   getAllPositions: [Position!]!
+  getAllRights: [Right!]!
   getAllUsers(departamentId: Float, positionId: Float): [User!]!
   getOneDepartament(id: Float!): Departament!
   getOnePosition(id: Float!): Position!
+  getOneRight(id: Float!): Right!
   getOneUser(id: Float!): User!
+}
+
+type Right {
+  id: ID!
+  name: String!
 }
 
 input UpdateDepartamentInput {
@@ -59,6 +73,11 @@ input UpdateDepartamentInput {
 }
 
 input UpdatePositionInput {
+  id: ID!
+  name: String!
+}
+
+input UpdateRightInput {
   id: ID!
   name: String!
 }
