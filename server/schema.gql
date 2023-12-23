@@ -73,7 +73,7 @@ input UpdateUserInput {
 
 type User {
   createdAt: DateTime!
-  departament: Departament!
+  departament: Departament
   id: ID!
   login: String!
   password: String!

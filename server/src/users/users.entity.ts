@@ -42,7 +42,7 @@ export class User {
     @BeforeUpdate()
     updateTimestamp() { this.updatedAt = new Date }
 
-    @Field((type) => Departament)
+    @Field((type) => Departament, { nullable: true })
     @ManyToOne((type) => Departament, (departament) => departament.users, { onDelete: 'SET NULL' })
     departament: Departament
 

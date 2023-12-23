@@ -5,11 +5,12 @@ import { UsersResolver } from './users.resolver'
 import { User } from './users.entity'
 import { DepartamentService } from 'src/departaments/departaments.service'
 import { Departament } from 'src/departaments/departaments.entity'
+import { Position } from 'src/positions/positions.entity'
 
 
 @Module({
 	imports: [
-		TypeOrmModule.forFeature([User, Departament]),
+		TypeOrmModule.forFeature([User, Departament, Position]),
 		
 	],
 	providers: [
