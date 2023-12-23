@@ -5,7 +5,9 @@ import {
     UpdateDateColumn,
     Column,
     BeforeUpdate,
-    ManyToOne
+    ManyToOne,
+    ManyToMany,
+    JoinTable
 } from 'typeorm'
 import {
     ObjectType,
@@ -14,6 +16,7 @@ import {
 } from '@nestjs/graphql'
 import { Departament } from 'src/departaments/departaments.entity'
 import { Position } from 'src/positions/positions.entity'
+import { Right } from 'src/rights/rights.entity'
 
 
 @ObjectType()
@@ -43,10 +46,26 @@ export class User {
     updateTimestamp() { this.updatedAt = new Date }
 
     @Field((type) => Departament, { nullable: true })
-    @ManyToOne((type) => Departament, (departament) => departament.users, { onDelete: 'SET NULL' })
+    @ManyToOne(
+        (type) => Departament, 
+        (departament) => departament.users, 
+        { onDelete: 'SET NULL', eager: true }
+    )
     departament: Departament
 
     @Field((type) => Position)
-    @ManyToOne((type) => Position, (position) => position.users, { onDelete: 'SET NULL' })
+    @ManyToOne(
+        (type) => Position, 
+        (position) => position.users, 
+        { onDelete: 'SET NULL', eager: true }
+    )
     position: Position
+
+    @Field((type) => Right)
+    @ManyToMany(
+        () => Right, 
+        { onDelete: 'CASCADE', eager: true, nullable: true }
+    )
+    @JoinTable({ name: 'user_rights' })
+    rights: Right[]
 }

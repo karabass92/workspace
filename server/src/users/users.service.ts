@@ -63,15 +63,15 @@ export class UserService {
         try {
             await this.validateUser(updateUserInput.login, updateUserInput.id)
             await this.validateDepartament(updateUserInput.departament?.id)
-            await this.validatePosition(updateUserInput.position.id)
+            await this.validatePosition(updateUserInput.position?.id)
+            if (updateUserInput.password) {
+                updateUserInput.password = await bcrypt.hash(updateUserInput.password, SALT)
+            }
             await this.userRepository.update(
-                { 
-                    id: updateUserInput.id 
-                },
+                { id: updateUserInput.id },
                 {
                     ...updateUserInput,
                     login: updateUserInput.login?.trim(),
-                    password: await bcrypt.hash(updateUserInput.password, SALT),
                 }
             )
             return await this.getOne(updateUserInput.id)
@@ -94,10 +94,6 @@ export class UserService {
         try {
             await this.validateUser('', id)
             return await this.userRepository.findOne({
-                relations: {
-                    departament: true,
-                    position: true
-                },
                 where: { 
                     id: id
                 }
@@ -112,10 +108,6 @@ export class UserService {
             await this.validateDepartament(getAllUsersInput.departamentId)
             await this.validatePosition(getAllUsersInput.positionId)
             return await this.userRepository.find({
-                relations: {
-                    departament: true,
-                    position: true
-                },
                 where: {
                     position: { id: getAllUsersInput.positionId },
                     departament: { id: getAllUsersInput.departamentId }

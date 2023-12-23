@@ -9,7 +9,6 @@ import {
     Field,
     ID
 } from '@nestjs/graphql'
-import { User } from 'src/users/users.entity'
 
 
 @ObjectType()

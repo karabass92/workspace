@@ -19,6 +19,7 @@ input CreateUserInput {
   login: String!
   password: String!
   position: UserPositionInput!
+  rights: [UserRightInput!]
 }
 
 """
@@ -88,6 +89,7 @@ input UpdateUserInput {
   login: String
   password: String
   position: UserPositionInput
+  rights: [UserRightInput!]
 }
 
 type User {
@@ -97,6 +99,7 @@ type User {
   login: String!
   password: String!
   position: Position!
+  rights: Right!
   updatedAt: DateTime!
 }
 
@@ -106,4 +109,8 @@ input UserDepartamentInput {
 
 input UserPositionInput {
   id: Float!
+}
+
+input UserRightInput {
+  id: Float
 }
