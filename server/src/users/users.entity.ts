@@ -43,27 +43,22 @@ export class User {
     updatedAt: Date
 
     @BeforeUpdate()
-    updateTimestamp() { this.updatedAt = new Date }
+    updateTimestamp() { this.updatedAt = new Date() }
 
     @Field((type) => Departament, { nullable: true })
-    @ManyToOne(
-        (type) => Departament, 
-        (departament) => departament.users, 
+    @ManyToOne((type) => Departament, (departament) => departament.users, 
         { onDelete: 'SET NULL', eager: true }
     )
     departament: Departament
 
     @Field((type) => Position)
-    @ManyToOne(
-        (type) => Position, 
-        (position) => position.users, 
+    @ManyToOne((type) => Position, (position) => position.users, 
         { onDelete: 'SET NULL', eager: true }
     )
     position: Position
 
     @Field((type) => Right)
-    @ManyToMany(
-        () => Right, 
+    @ManyToMany(() => Right,right => right.users,
         { onDelete: 'CASCADE', eager: true, nullable: true }
     )
     @JoinTable({ name: 'user_rights' })

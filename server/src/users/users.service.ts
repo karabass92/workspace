@@ -55,7 +55,7 @@ export class UserService {
                 password: await bcrypt.hash(createUserInput.password, SALT),
             })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -67,16 +67,27 @@ export class UserService {
             if (updateUserInput.password) {
                 updateUserInput.password = await bcrypt.hash(updateUserInput.password, SALT)
             }
-            await this.userRepository.update(
-                { id: updateUserInput.id },
-                {
-                    ...updateUserInput,
-                    login: updateUserInput.login?.trim(),
-                }
-            )
+            if (updateUserInput.rights) {
+                const actualRights = await this.userRepository
+                    .createQueryBuilder()
+                    .relation(User, 'rights')
+                    .of(updateUserInput).loadMany()
+                await this.userRepository
+                    .createQueryBuilder()
+                    .relation(User, 'rights')
+                    .of(updateUserInput)
+                    .addAndRemove(updateUserInput.rights, actualRights)
+                delete updateUserInput.rights
+            }
+            await this.userRepository
+                .createQueryBuilder()
+                .update()
+                .set(updateUserInput)
+                .where('id = :id', { id: updateUserInput.id })
+                .execute()
             return await this.getOne(updateUserInput.id)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -86,7 +97,7 @@ export class UserService {
             await this.userRepository.delete({ id })
             return id
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -94,12 +105,12 @@ export class UserService {
         try {
             await this.validateUser('', id)
             return await this.userRepository.findOne({
-                where: { 
+                where: {
                     id: id
                 }
             })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -114,7 +125,7 @@ export class UserService {
                 }
             })
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 }
