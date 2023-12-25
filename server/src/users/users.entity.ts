@@ -42,13 +42,13 @@ export class User {
     updateTimestamp() { this.updatedAt = new Date() }
 
     @Field((type) => Departament, { nullable: true })
-    @ManyToOne((type) => Departament, (departament) => departament.users, 
+    @ManyToOne((type) => Departament, (departament) => departament.users,
         { onDelete: 'SET NULL', eager: true }
     )
-    departament: Departament
+    departament?: Departament
 
     @Field((type) => Position)
-    @ManyToOne((type) => Position, (position) => position.users, 
+    @ManyToOne((type) => Position, (position) => position.users,
         { onDelete: 'SET NULL', eager: true }
     )
     position: Position
