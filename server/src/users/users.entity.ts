@@ -9,11 +9,7 @@ import {
     ManyToMany,
     JoinTable
 } from 'typeorm'
-import {
-    ObjectType,
-    Field,
-    ID
-} from '@nestjs/graphql'
+import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { Departament } from 'src/departaments/departaments.entity'
 import { Position } from 'src/positions/positions.entity'
 import { Right } from 'src/rights/rights.entity'
@@ -57,10 +53,8 @@ export class User {
     )
     position: Position
 
-    @Field((type) => Right)
-    @ManyToMany(() => Right,right => right.users,
-        { onDelete: 'CASCADE', eager: true, nullable: true }
-    )
+    @Field((type) => [Right])
+    @ManyToMany(() => Right, { onDelete: 'CASCADE', eager: true, nullable: true })
     @JoinTable({ name: 'user_rights' })
-    rights: Right[]
+    rights?: [Right]
 }

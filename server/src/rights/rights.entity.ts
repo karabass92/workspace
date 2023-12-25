@@ -1,15 +1,5 @@
-import {
-    PrimaryGeneratedColumn,
-    Entity,
-    Column,
-    ManyToMany
-} from 'typeorm'
-import {
-    ObjectType,
-    Field,
-    ID
-} from '@nestjs/graphql'
-import { User } from 'src/users/users.entity'
+import { PrimaryGeneratedColumn, Entity, Column } from 'typeorm'
+import { ObjectType, Field, ID } from '@nestjs/graphql'
 
 
 @ObjectType()
@@ -20,9 +10,6 @@ export class Right {
     id: number
 
     @Field()
-    @Column({ unique: true })
+    @Column()
     name: string
-
-    @ManyToMany(() => User, user => user.rights)
-    users: User[]
 }

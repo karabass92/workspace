@@ -99,7 +99,7 @@ type User {
   login: String!
   password: String!
   position: Position!
-  rights: Right!
+  rights: [Right!]!
   updatedAt: DateTime!
 }
 

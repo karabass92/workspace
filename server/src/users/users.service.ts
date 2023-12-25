@@ -104,11 +104,7 @@ export class UserService {
     async getOne(id: number): Promise<User> {
         try {
             await this.validateUser('', id)
-            return await this.userRepository.findOne({
-                where: {
-                    id: id
-                }
-            })
+            return await this.userRepository.findOneBy({ id })
         } catch (error) {
             console.error(error)
         }
