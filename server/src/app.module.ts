@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module'
 import { DepartamentsModule } from './departaments/departaments.module'
 import { PositionsModule } from './positions/positions.module'
 import { RightsModule } from './rights/rights.module';
+import { TagsModule } from './tags/tags.module';
 
 
 @Module({
@@ -25,7 +26,7 @@ import { RightsModule } from './rights/rights.module';
             playground: true
         }),
         
-        DatabaseModule, UsersModule, DepartamentsModule, PositionsModule, RightsModule
+        DatabaseModule, UsersModule, DepartamentsModule, PositionsModule, RightsModule, TagsModule
     ],
 
     providers: [],

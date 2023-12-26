@@ -70,7 +70,7 @@ export class RightService {
     async getOne(id: number): Promise<Right> {
         try {
             await this.validateRight('', id)
-            return await this.rightRepository.findOne({ where: { id } })
+            return await this.rightRepository.findOneBy({ id })
         } catch (error) {
             console.error(error)
         }

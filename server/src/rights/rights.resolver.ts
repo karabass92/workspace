@@ -16,7 +16,7 @@ export class RightResolver {
         try {
             return await this.rightService.create(createRightInput)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -25,7 +25,7 @@ export class RightResolver {
         try {
             return await this.rightService.update(updateRightInput)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -34,7 +34,7 @@ export class RightResolver {
         try {
             return await this.rightService.remove(id)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -43,7 +43,7 @@ export class RightResolver {
         try {
             return await this.rightService.getOne(id)
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 
@@ -52,7 +52,7 @@ export class RightResolver {
         try {
             return await this.rightService.getAll()
         } catch (error) {
-            console.log(error)
+            console.error(error)
         }
     }
 }

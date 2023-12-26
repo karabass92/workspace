@@ -50,10 +50,6 @@ export class PositionService {
         try {
             const name = this.modifyName(updatePositionInput.name)
             await this.validatePosition(name, updatePositionInput.id)
-            // await this.positionRepository.update(
-            //     { id: updatePositionInput.id },
-            //     { name: name }
-            // )
             if (updatePositionInput.rights) {
                 const actualRights = await this.positionRepository
                     .createQueryBuilder()

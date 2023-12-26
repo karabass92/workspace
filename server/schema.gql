@@ -9,9 +9,14 @@ input CreateDepartamentInput {
 
 input CreatePositionInput {
   name: String!
+  rights: [PositionRightInput!]
 }
 
 input CreateRightInput {
+  name: String!
+}
+
+input CreateTagInput {
   name: String!
 }
 
@@ -42,34 +47,49 @@ type Mutation {
   createDepartament(createDepartament: CreateDepartamentInput!): Departament!
   createPosition(createPosition: CreatePositionInput!): Position!
   createRight(createRight: CreateRightInput!): Right!
+  createTag(createTag: CreateTagInput!): Tag!
   createUser(createUser: CreateUserInput!): User!
   removeDepartament(id: Float!): Float!
   removePosition(id: Float!): Float!
   removeRight(id: Float!): Float!
+  removeTag(id: Float!): Float!
   removeUser(id: Float!): Float!
   updateDepartament(updateDepartament: UpdateDepartamentInput!): Departament!
   updatePosition(updatePosition: UpdatePositionInput!): Position!
   updateRight(updateRight: UpdateRightInput!): Right!
+  updateTag(updateTag: UpdateTagInput!): Tag!
   updateUser(updateUser: UpdateUserInput!): User!
 }
 
 type Position {
   id: ID!
   name: String!
+  rights: [Right!]!
+}
+
+input PositionRightInput {
+  id: Float
 }
 
 type Query {
   getAllDepartaments: [Departament!]!
   getAllPositions: [Position!]!
   getAllRights: [Right!]!
+  getAllTags: [Tag!]!
   getAllUsers(departamentId: Float, positionId: Float): [User!]!
   getOneDepartament(id: Float!): Departament!
   getOnePosition(id: Float!): Position!
   getOneRight(id: Float!): Right!
+  getOneTag(id: Float!): Tag!
   getOneUser(id: Float!): User!
 }
 
 type Right {
+  id: ID!
+  name: String!
+}
+
+type Tag {
   id: ID!
   name: String!
 }
@@ -83,9 +103,15 @@ input UpdateDepartamentInput {
 input UpdatePositionInput {
   id: ID!
   name: String!
+  rights: [PositionRightInput!]
 }
 
 input UpdateRightInput {
+  id: ID!
+  name: String!
+}
+
+input UpdateTagInput {
   id: ID!
   name: String!
 }
