@@ -37,7 +37,10 @@ export class PositionService {
         try {
             const name = this.modifyName(createPositionInput.name)
             await this.validatePosition(name)
-            return await this.positionRepository.save({ name })
+            return await this.positionRepository.save({ 
+                ...createPositionInput,
+                name 
+            })
         } catch (error) {
             console.error(error)
         }
@@ -47,10 +50,28 @@ export class PositionService {
         try {
             const name = this.modifyName(updatePositionInput.name)
             await this.validatePosition(name, updatePositionInput.id)
-            await this.positionRepository.update(
-                { id: updatePositionInput.id },
-                { name: name }
-            )
+            // await this.positionRepository.update(
+            //     { id: updatePositionInput.id },
+            //     { name: name }
+            // )
+            if (updatePositionInput.rights) {
+                const actualRights = await this.positionRepository
+                    .createQueryBuilder()
+                    .relation(Position, 'rights')
+                    .of(updatePositionInput).loadMany()
+                await this.positionRepository
+                    .createQueryBuilder()
+                    .relation(Position, 'rights')
+                    .of(updatePositionInput)
+                    .addAndRemove(updatePositionInput.rights, actualRights)
+                delete updatePositionInput.rights
+            }
+            await this.positionRepository
+                .createQueryBuilder()
+                .update()
+                .set(updatePositionInput)
+                .where('id = :id', { id: updatePositionInput.id })
+                .execute()
             return await this.getOne(updatePositionInput.id)
         } catch (error) {
             console.error(error)

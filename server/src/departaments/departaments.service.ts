@@ -50,11 +50,6 @@ export class DepartamentService {
         try {
             const name = this.modifyName(updateDepartamentInput.name)
             await this.validateDepartament(name, updateDepartamentInput.id)
-            
-            // await this.departamentRepository.update(
-            //     { id: updateDepartamentInput.id },
-            //     { name: name }
-            // )
             if (updateDepartamentInput.rights) {
                 const actualRights = await this.departamentRepository
                     .createQueryBuilder()
