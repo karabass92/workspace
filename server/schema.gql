@@ -4,6 +4,7 @@
 
 input CreateDepartamentInput {
   name: String!
+  rights: [DepartamentRightInput!]
 }
 
 input CreatePositionInput {
@@ -30,6 +31,11 @@ scalar DateTime
 type Departament {
   id: ID!
   name: String!
+  rights: [Right!]!
+}
+
+input DepartamentRightInput {
+  id: Float
 }
 
 type Mutation {
@@ -70,7 +76,8 @@ type Right {
 
 input UpdateDepartamentInput {
   id: ID!
-  name: String!
+  name: String
+  rights: [DepartamentRightInput!]
 }
 
 input UpdatePositionInput {

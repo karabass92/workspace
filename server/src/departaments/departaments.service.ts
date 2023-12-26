@@ -37,7 +37,10 @@ export class DepartamentService {
         try {
             const name = this.modifyName(createDepartamentInput.name)
             await this.validateDepartament(name)
-            return await this.departamentRepository.save({ name })
+            return await this.departamentRepository.save({ 
+                ...createDepartamentInput,
+                name 
+            })
         } catch (error) {
             console.error(error)
         }
@@ -47,10 +50,29 @@ export class DepartamentService {
         try {
             const name = this.modifyName(updateDepartamentInput.name)
             await this.validateDepartament(name, updateDepartamentInput.id)
-            await this.departamentRepository.update(
-                { id: updateDepartamentInput.id },
-                { name: name }
-            )
+            
+            // await this.departamentRepository.update(
+            //     { id: updateDepartamentInput.id },
+            //     { name: name }
+            // )
+            if (updateDepartamentInput.rights) {
+                const actualRights = await this.departamentRepository
+                    .createQueryBuilder()
+                    .relation(Departament, 'rights')
+                    .of(updateDepartamentInput).loadMany()
+                await this.departamentRepository
+                    .createQueryBuilder()
+                    .relation(Departament, 'rights')
+                    .of(updateDepartamentInput)
+                    .addAndRemove(updateDepartamentInput.rights, actualRights)
+                delete updateDepartamentInput.rights
+            }
+            await this.departamentRepository
+                .createQueryBuilder()
+                .update()
+                .set(updateDepartamentInput)
+                .where('id = :id', { id: updateDepartamentInput.id })
+                .execute()
             return await this.getOne(updateDepartamentInput.id)
         } catch (error) {
             console.error(error)

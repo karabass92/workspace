@@ -1,6 +1,7 @@
-import { PrimaryGeneratedColumn, Entity, Column, OneToMany } from 'typeorm'
+import { PrimaryGeneratedColumn, Entity, Column, OneToMany, ManyToMany, JoinTable } from 'typeorm'
 import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { User } from 'src/users/users.entity'
+import { Right } from 'src/rights/rights.entity'
 
 
 @ObjectType()
@@ -16,4 +17,9 @@ export class Departament {
 
     @OneToMany(() => User, (user) => user.departament, { cascade: true })
     users: User[]
+
+    @Field((type) => [Right])
+    @ManyToMany(() => Right, { onDelete: 'CASCADE', eager: true, nullable: true })
+    @JoinTable({ name: 'departament_rights' })
+    rights?: [Right]
 }
