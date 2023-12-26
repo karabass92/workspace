@@ -11,5 +11,5 @@ export class UpdateDepartamentInput {
     name: string
 
     @Field(type => [DepartamentRightInput], { nullable: true })
-    rights: DepartamentRightInput[]
+    rights: [DepartamentRightInput]
 }

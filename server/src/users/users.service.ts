@@ -79,6 +79,18 @@ export class UserService {
                     .addAndRemove(updateUserInput.rights, actualRights)
                 delete updateUserInput.rights
             }
+            if (updateUserInput.tags) {
+                const actualTags = await this.userRepository
+                    .createQueryBuilder()
+                    .relation(User, 'tags')
+                    .of(updateUserInput).loadMany()
+                await this.userRepository
+                    .createQueryBuilder()
+                    .relation(User, 'tags')
+                    .of(updateUserInput)
+                    .addAndRemove(updateUserInput.rights, actualTags)
+                delete updateUserInput.tags
+            }
             await this.userRepository
                 .createQueryBuilder()
                 .update()

@@ -8,5 +8,5 @@ export class CreateDepartamentInput {
     name: string
 
     @Field(type => [DepartamentRightInput], { nullable: true })
-    rights: DepartamentRightInput[]
+    rights: [DepartamentRightInput]
 }

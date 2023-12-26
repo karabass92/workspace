@@ -13,6 +13,7 @@ import { ObjectType, Field, ID } from '@nestjs/graphql'
 import { Departament } from 'src/departaments/departaments.entity'
 import { Position } from 'src/positions/positions.entity'
 import { Right } from 'src/rights/rights.entity'
+import { Tag } from 'src/tags/tags.entity'
 
 
 @ObjectType()
@@ -57,4 +58,9 @@ export class User {
     @ManyToMany(() => Right, { onDelete: 'CASCADE', eager: true, nullable: true })
     @JoinTable({ name: 'user_rights' })
     rights?: [Right]
+
+    @Field((type) => [Tag])
+    @ManyToMany(() => Tag, { onDelete: 'CASCADE', eager: true, nullable: true })
+    @JoinTable({ name: 'user_tags' })
+    tags?: [Tag]
 }

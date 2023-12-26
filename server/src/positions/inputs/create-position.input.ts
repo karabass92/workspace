@@ -8,5 +8,5 @@ export class CreatePositionInput {
     name: string
 
     @Field(type => [PositionRightInput], { nullable: true })
-    rights: PositionRightInput[]
+    rights: [PositionRightInput]
 }

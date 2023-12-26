@@ -26,6 +26,7 @@ input CreateUserInput {
   password: String!
   position: UserPositionInput!
   rights: [UserRightInput!]
+  tags: [UserTagInput!]
 }
 
 """
@@ -123,6 +124,7 @@ input UpdateUserInput {
   password: String
   position: UserPositionInput
   rights: [UserRightInput!]
+  tags: [UserTagInput!]
 }
 
 type User {
@@ -133,6 +135,7 @@ type User {
   password: String!
   position: Position!
   rights: [Right!]!
+  tags: [Tag!]!
   updatedAt: DateTime!
 }
 
@@ -145,5 +148,9 @@ input UserPositionInput {
 }
 
 input UserRightInput {
+  id: Float
+}
+
+input UserTagInput {
   id: Float
 }
