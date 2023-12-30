@@ -44,6 +44,13 @@ export class UserService {
         }
     }
 
+    private filterUsersByTags(tags: number[], users: User[]): User[] {
+        return users.filter(user => {
+            const userTags = user?.tags.map(tag => tag.id)
+            return userTags.some(tag => tags.includes(tag))
+        })
+    }
+
     async create(createUserInput: CreateUserInput): Promise<User> {
         try {
             await this.validateUser(createUserInput.login)
@@ -126,12 +133,14 @@ export class UserService {
         try {
             await this.validateDepartament(getAllUsersInput.departamentId)
             await this.validatePosition(getAllUsersInput.positionId)
-            return await this.userRepository.find({
+            let users =  await this.userRepository.find({
                 where: {
                     position: { id: getAllUsersInput.positionId },
                     departament: { id: getAllUsersInput.departamentId }
                 }
             })
+            if (getAllUsersInput?.tags) return this.filterUsersByTags(getAllUsersInput.tags, users)
+            return users
         } catch (error) {
             console.error(error)
         }

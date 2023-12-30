@@ -77,7 +77,7 @@ type Query {
   getAllPositions: [Position!]!
   getAllRights: [Right!]!
   getAllTags: [Tag!]!
-  getAllUsers(departamentId: Float, positionId: Float): [User!]!
+  getAllUsers(departamentId: Float, positionId: Float, tags: [Float!]): [User!]!
   getOneDepartament(id: Float!): Departament!
   getOnePosition(id: Float!): Position!
   getOneRight(id: Float!): Right!

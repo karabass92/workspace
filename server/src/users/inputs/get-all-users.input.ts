@@ -1,5 +1,5 @@
 import { ArgsType, Field } from "@nestjs/graphql"
-import { IsNumber } from "class-validator"
+import { IsNumber, IsArray } from "class-validator"
 
 
 @ArgsType()
@@ -11,4 +11,7 @@ export class GetAllUsersInput {
     @Field({ nullable: true})
     @IsNumber()
     positionId: number
+
+    @Field((type) => [Number], { nullable: true })
+    tags: Array<number>
 }
