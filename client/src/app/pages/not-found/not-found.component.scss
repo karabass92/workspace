@@ -1,0 +1,30 @@
+.main {
+    padding: 25vh 0;
+    & h1 {
+        text-align: center;
+        font-size: 140px;
+        line-height: 100%;
+        color: #e91e63;
+    }
+    & p {
+        text-align: center;
+        font-size: 80px;
+        line-height: 100%;
+        color: #e91e63;
+    }
+    & a {
+        display: block;
+        margin-top: 50px;
+        text-align: center;
+        font-size: 24px;
+        color: #e91e63;
+        transition: all ease 0.1s;
+    }
+    & a:hover {
+        color: rgba(224, 222, 222, 0.496);
+        transition: all ease 0.1s;
+    }
+    & a:visited {
+        color: #e91e63;
+    }
+}
